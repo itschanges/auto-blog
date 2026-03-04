@@ -8,7 +8,7 @@ def generate_article():
     model = genai.GenerativeModel("gemini-1.5-flash")
 
     prompt = """
-你是一名中文科技博客作者，请生成一篇关于"OpenWrt 家庭网络优化"的原创文章。
+你是一名中文战地作者，请生成一篇关于"最新美国-以色列-伊朗战事发展"的最新报道原创文章。
 要求：
 - 字数 1500~2500
 - HTML 格式输出（包含 <h2>, <p>, <ul>, <li>）
