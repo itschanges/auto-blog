@@ -1,11 +1,11 @@
 import os
 import requests
-import google.generativeai as genai
+from google import genai
 
-# ====== 1. AI 生成文章 ======
+# 1. 使用 Google Gemini 2.0 Flash 生成文章
 def generate_article():
-    genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    client = genai.Client(api_key=os.environ["GOOGLE_API_KEY"])
+
 
     prompt = """
 你是一名中文战地作者，请生成一篇关于"最新美国-以色列-伊朗战事发展"的最新报道原创文章。
@@ -15,7 +15,11 @@ def generate_article():
 - 风格通俗易懂，适合普通用户
 """
 
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=prompt
+    )
+
     html = response.text
 
     # 第一行作为标题
@@ -25,7 +29,8 @@ def generate_article():
 
     return title, content
 
-# ====== 2. 发布到 WordPress ======
+
+# 2. 发布到 WordPress
 def post_to_wordpress(title, content):
     wp_url = os.environ["WP_URL"].rstrip("/") + "/wp-json/wp/v2/posts"
     wp_user = os.environ["WP_USER"]
@@ -44,6 +49,7 @@ def post_to_wordpress(title, content):
     )
     resp.raise_for_status()
     print("WordPress 发布成功:", resp.json().get("link"))
+
 
 if __name__ == "__main__":
     title, content = generate_article()
