@@ -1,11 +1,11 @@
 import os
 import requests
-from google import genai
 
-# 1. 使用 Google Gemini 2.0 Flash 生成文章
+# 1. 使用 DeepSeek 生成文章
 def generate_article():
-    client = genai.Client(api_key=os.environ["GOOGLE_API_KEY"])
+    api_key = os.environ["DEEPSEEK_API_KEY"]
 
+    url = "https://api.deepseek.com/chat/completions"
 
     prompt = """
 你是一名中文战地作者，请生成一篇关于"最新美国-以色列-伊朗战事发展"的最新报道原创文章。
@@ -15,12 +15,23 @@ def generate_article():
 - 风格通俗易懂，适合普通用户
 """
 
-    response = client.models.generate_content(
-        model="gemini-2.0-flash-lite",
-        contents=prompt
-    )
+    payload = {
+        "model": "deepseek-chat",
+        "messages": [
+            {"role": "user", "content": prompt}
+        ],
+        "temperature": 0.7
+    }
 
-    html = response.text
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}"
+    }
+
+    resp = requests.post(url, json=payload, headers=headers)
+    resp.raise_for_status()
+
+    html = resp.json()["choices"][0]["message"]["content"]
 
     # 第一行作为标题
     lines = html.splitlines()
