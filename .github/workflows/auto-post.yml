@@ -24,7 +24,7 @@ jobs:
 
       - name: Run generator & publisher
         env:
-          GITHUB_MODELS_API_KEY: ${{ secrets.GITHUB_MODELS_API_KEY }}
+          GH_MODELS_API_KEY: ${{ secrets.GH_MODELS_API_KEY }}
           WP_URL: ${{ secrets.WP_URL }}
           WP_USER: ${{ secrets.WP_USER }}
           WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
