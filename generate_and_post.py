@@ -3,7 +3,7 @@ import requests
 
 # 1. 使用 GitHub Models 生成文章
 def generate_article():
-    api_key = os.environ["GITHUB_MODELS_API_KEY"]
+    api_key = os.environ["GH_MODELS_API_KEY"]
 
     url = "https://models.inference.ai.azure.com/v1/chat/completions"
 
