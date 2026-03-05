@@ -5,7 +5,7 @@ import requests
 def generate_article():
     api_key = os.environ["GH_MODELS_API_KEY"]
 
-    url = "https://models.inference.ai.azure.com/v1/chat/completions"
+    url = "https://models.inference.ai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-10-01-preview"
 
 
     prompt = """
