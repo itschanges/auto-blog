@@ -1,11 +1,12 @@
 import os
 import requests
 
-# 1. 使用 DeepSeek 生成文章
+# 1. 使用 GitHub Models 生成文章
 def generate_article():
-    api_key = os.environ["DEEPSEEK_API_KEY"]
+    api_key = os.environ["GITHUB_MODELS_API_KEY"]
 
-    url = "https://api.deepseek.com/chat/completions"
+    url = "https://models.inference.ai.azure.com/v1/chat/completions"
+
 
     prompt = """
 你是一名中文战地作者，请生成一篇关于"最新美国-以色列-伊朗战事发展"的最新报道原创文章。
@@ -15,8 +16,9 @@ def generate_article():
 - 风格通俗易懂，适合普通用户
 """
 
+
     payload = {
-        "model": "deepseek-chat",
+        "model": "gpt-4o-mini",  # GitHub Models 免费模型
         "messages": [
             {"role": "user", "content": prompt}
         ],
@@ -66,3 +68,4 @@ if __name__ == "__main__":
     title, content = generate_article()
     print("生成文章标题:", title)
     post_to_wordpress(title, content)
+
